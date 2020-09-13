@@ -52,7 +52,14 @@
             				<label class="col-form-label large-font">Enter Tasks</label>
             				<hr>
             			</div>
-						<div class="taskDiv">	    
+						<div class="taskDiv">	 
+							<div id="taskSubDiv">
+			    				<label class="col-form-label col-md-5">Task Description&nbsp;&nbsp;</label>
+					
+					    		<label class="col-form-label col-md-3">&nbsp;&nbsp;Start Time&nbsp;&nbsp;</label>
+		
+			      				<label class="col-form-label col-md-3">&nbsp;&nbsp;End Time&nbsp;&nbsp;</label>
+			      			</div>   
 			    			<div id="taskSubDiv">
 			    				<!-- <label class="col-form-label large-font">Task Description&nbsp;&nbsp;</label> -->
 	    						<input class="taskDesc form-control col-md-5 display-inline" id="taskDescId" type="text" placeholder="Enter Task" name="taskDesc" value="" required>

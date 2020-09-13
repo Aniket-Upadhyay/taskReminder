@@ -9,4 +9,3 @@ Environment details:
 
 Database script is available in the database folder.
 
-JSP is used and the base service request path is /taskReminder
