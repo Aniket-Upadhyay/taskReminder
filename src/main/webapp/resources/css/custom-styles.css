@@ -1,0 +1,29 @@
+.display-inline{
+	display: inline;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+thead {
+	background-color: #bed1e2;
+}
+
+.large-font{
+	font-size: 20px;
+}
+
+.display-right {
+	float: right;
+}
+
+.remove-margin-left {
+	margin-left: 0px !important;
+}
+
+.noData{
+	font-size: 60px;
+	color: #dee2e6;
+	text-align: center;
+}
