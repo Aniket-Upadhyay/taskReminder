@@ -36,7 +36,7 @@
           <section class="col-lg-12 connectedSortable ui-sortable">
           	<div class="card direct-chat direct-chat-primary">
               <div class="card-body">
-                <div class="direct-chat-messages" style="height:700px;">
+                <div class="direct-chat-messages" style="height:850px;">
                   <div class="direct-chat-msg right">
                     <div class="container">
 				    	<!-- <div class="form-group col-lg-4">
