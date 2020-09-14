@@ -48,10 +48,10 @@ $(document).ready(function(){
 		
 		saveTasks();
 		
-		/*$(".taskDesc").val("");
+		$(".taskDesc").val("");
 		$(".startTime").val("");
-		$(".endTime").val("");*/
-		/*$("#addTasksButton").prop('disabled',true);*/
+		$(".endTime").val("");
+		$("#addTasksButton").prop('disabled',true);
 		
 	});
 	
