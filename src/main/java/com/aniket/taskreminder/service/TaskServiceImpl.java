@@ -102,15 +102,13 @@ public class TaskServiceImpl implements TaskService {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			SystemTray tray = SystemTray.getSystemTray();
-	
 	        Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
-	
 	        TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
 	        trayIcon.setImageAutoSize(true);
 	        trayIcon.setToolTip("System tray icon demo");
 	        tray.add(trayIcon);
 	
-	        trayIcon.displayMessage("Task Reminder", reminderMessage, MessageType.INFO);
+	        trayIcon.displayMessage("Task Reminder", reminderMessage, MessageType.NONE);
 	        jsonObject.put(AppConstants.result, AppConstants.success);
 		}catch(Exception e) {
 			jsonObject.put(AppConstants.result, AppConstants.failure);
@@ -132,27 +130,27 @@ public class TaskServiceImpl implements TaskService {
 
 	@Override
 	public void updateCronExpression() throws ConfigurationException {
-		JSONObject jsonObject = new JSONObject();
 		Properties props = new Properties();
 		try {
 			TaskEntity taskEntity = getTask(AppUtils.getDateWithZeroTime(AppUtils.currentDatetime));
-			String cronExpression = taskEntity.getEndTime().getSeconds() + " " + taskEntity.getEndTime().getMinutes() + " " + taskEntity.getEndTime().getHours() +  " * * *";
+			if(taskEntity != null) {
+				String cronExpression = taskEntity.getEndTime().getSeconds() + " " + taskEntity.getEndTime().getMinutes() + " " + taskEntity.getEndTime().getHours() +  " * * *";
+				
+				ClassPathResource c = new ClassPathResource("application.properties");
+				File f = c.getFile();
+				
+				final FileInputStream fileInputStream = new FileInputStream(f.getAbsolutePath());
+				props.load((FileInputStream) new FileInputStream(f.getAbsolutePath()));
+		        fileInputStream.close();
+				
+				props.setProperty("cron.expression", cronExpression);
+	
+		        final FileOutputStream fileOutputStream = new FileOutputStream(f.getAbsolutePath());
+		        props.store(fileOutputStream, null);
 			
-			ClassPathResource c = new ClassPathResource("application.properties");
-			File f = c.getFile();
-			
-			final FileInputStream fileInputStream = new FileInputStream(f.getAbsolutePath());
-			props.load((FileInputStream) new FileInputStream(f.getAbsolutePath()));
-	        fileInputStream.close();
-			
-			props.setProperty("cron.expression", cronExpression);
-
-	        final FileOutputStream fileOutputStream = new FileOutputStream(f.getAbsolutePath());
-	        props.store(fileOutputStream, null);
-		
-	        jsonObject.put(AppConstants.result, AppConstants.success);
+			}
 		}catch(Exception e) {
-			jsonObject.put(AppConstants.result, AppConstants.failure);
+			e.printStackTrace();
 		}
 	}
 

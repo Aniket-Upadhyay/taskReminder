@@ -21,7 +21,7 @@ public class ScheduleJob {
 	TaskService taskService;
 	
 	@Scheduled(cron = "${cron.expression}")
-    public void demoServiceMethod() throws AWTException, ConfigurationException
+    public void taskReminderSchedulerUpdate() throws AWTException, ConfigurationException
     {
 		JSONObject jsonObject = new JSONObject();
 		TaskEntity taskEntity = taskService.getTask(AppUtils.getDateWithZeroTime(AppUtils.currentDatetime));
@@ -30,6 +30,12 @@ public class ScheduleJob {
 			jsonObject = taskService.updateReminderFlag(taskEntity);
         	if((boolean) jsonObject.get("result"))
         		taskService.updateCronExpression();
+    }
+	
+	@Scheduled(cron = "00 15 01 * * *")
+    public void taskReminderCheckAndUpdate() throws AWTException, ConfigurationException
+    {
+		taskService.updateCronExpression();
     }
 	
 }
