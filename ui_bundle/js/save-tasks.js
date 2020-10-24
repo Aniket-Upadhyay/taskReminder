@@ -12,17 +12,20 @@ function saveTasks(){
 	var endDateTimeJson = endDateTime.getFullYear() + "-" + selectedEndMonth + "-" + endDateTime.getDate() + " " + endDateTime.getHours() + ":" + endDateTime.getMinutes() + ":" + endDateTime.getSeconds();
 	var createdDateJson = startDateTime.getFullYear() + "-" + selectedStartMonth + "-" + startDateTime.getDate();
 	
+	var fcmToken = localStorage.getItem('fcmToken');
+
 	var taskRequestJson = {
 		"task" : teskDescJson,
 		"startTime" : startDateTimeJson,
 		"endTime" : endDateTimeJson,
 		"reminderFlag" : 0,
+		"fcmToken" : fcmToken,
 		"createdDate" : createdDateJson
 	};
 	
 	$.ajax({
 
-	    url : '/taskReminder/saveTasks',
+	    url : 'http://localhost:8080/taskReminder/saveTasks',
 	    type : 'POST',
 	    data : JSON.stringify(taskRequestJson),
 	    dataType:'json',
@@ -52,5 +55,26 @@ function addTaskDetails(taskId, task, startTime, endTime) {
 		'</tr>'
 	);
 	
+}
+
+function uploadTaskFile() {
+	
+	var formData = new FormData($('.fileUpload')[0]);
+  
+    $.ajax({
+        url: "/taskReminder/uploadFileTasks",
+        type: "POST",
+        data: formData,
+        enctype: 'multipart/form-data',
+        processData: false,
+        contentType: false,
+        cache: false,
+        success: function (res) {
+            console.log(res);
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
 }
 

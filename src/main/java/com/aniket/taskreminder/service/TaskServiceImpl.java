@@ -6,12 +6,18 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -166,6 +172,47 @@ public class TaskServiceImpl implements TaskService {
 			}
 		}catch(Exception e) {
 			jsonObject.put(AppConstants.result, AppConstants.failure);
+		}
+		return jsonObject;
+	}
+
+	@Override
+	public JSONObject pushNotification(TaskEntity taskEntity) throws Exception {
+		JSONObject jsonObject = new JSONObject();
+		URL url = new URL(AppConstants.API_URL_FCM);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+		try {
+			conn.setUseCaches(false);
+			conn.setDoInput(true);
+			conn.setDoOutput(true);
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "key=" + AppConstants.SERVER_KEY_FCM);
+			conn.setRequestProperty("Content-Type", "application/json");
+			JSONObject data = new JSONObject();
+			data.put("to", taskEntity.getFcmToken().trim());
+			JSONObject info = new JSONObject();
+			info.put("title", AppConstants.REMINDER); // Notification title
+			info.put("body", taskEntity.getTask()); // Notification body
+			data.put("notification", info);
+			System.out.println(data.toJSONString());
+			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+			wr.write(data.toString());
+			wr.flush();
+			wr.close();
+			int responseCode = conn.getResponseCode();
+			System.out.println("Response Code : " + responseCode);
+	
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+	
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			jsonObject.put(AppConstants.result, AppConstants.success);
+		}catch(Exception e) {
+			jsonObject.put(AppConstants.result, AppConstants.success);
 		}
 		return jsonObject;
 	}

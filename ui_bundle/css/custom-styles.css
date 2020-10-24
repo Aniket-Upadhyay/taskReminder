@@ -30,3 +30,16 @@ thead {
 	margin-top: 100px;
 	
 }
+
+.vl {
+  border-left: 2px solid black;
+  height: 500px;
+}
+
+.half-width{
+	width: 50%;
+}
+
+.margin-left-10{
+	margin-left: 10%;
+}

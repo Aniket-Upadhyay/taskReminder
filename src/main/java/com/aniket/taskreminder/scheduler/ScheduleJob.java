@@ -21,11 +21,11 @@ public class ScheduleJob {
 	TaskService taskService;
 	
 	@Scheduled(cron = "${cron.expression}")
-    public void taskReminderSchedulerUpdate() throws AWTException, ConfigurationException
+    public void taskReminderSchedulerUpdate() throws Exception
     {
 		JSONObject jsonObject = new JSONObject();
 		TaskEntity taskEntity = taskService.getTask(AppUtils.getDateWithZeroTime(AppUtils.currentDatetime));
-		jsonObject = taskService.triggerReminder(taskEntity.getTask());
+		jsonObject = taskService.pushNotification(taskEntity);
 		if((boolean) jsonObject.get("result"))
 			jsonObject = taskService.updateReminderFlag(taskEntity);
         	if((boolean) jsonObject.get("result"))

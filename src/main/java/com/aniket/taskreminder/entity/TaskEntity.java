@@ -37,6 +37,9 @@ public class TaskEntity {
 	@Column(name = "reminder_flag")
 	private Integer reminderFlag;
 	
+	@Column(name = "fcm_token")
+	private String fcmToken;
+	
 	@Column(name = "created_date")
 	private Date createdDate;
 
@@ -51,6 +54,7 @@ public class TaskEntity {
 		this.startTime = AppUtils.convertStringToDate(taskJson.getStartTime(), "yyyy-MM-dd HH:mm");
 		this.endTime = AppUtils.convertStringToDate(taskJson.getEndTime(), "yyyy-MM-dd HH:mm");
 		this.reminderFlag = taskJson.getReminderFlag();
+		this.fcmToken = taskJson.getFcmToken();
 		this.createdDate = AppUtils.convertStringToDate(taskJson.getStartTime(), "yyyy-MM-dd");
 	}
 
@@ -95,6 +99,14 @@ public class TaskEntity {
 	public void setReminderFlag(Integer reminderFlag) {
 		this.reminderFlag = reminderFlag;
 	}
+	
+	public String getFcmToken() {
+		return fcmToken;
+	}
+
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
+	}
 
 	public Date getCreatedDate() {
 		return createdDate;
@@ -107,7 +119,8 @@ public class TaskEntity {
 	@Override
 	public String toString() {
 		return "TaskEntity [id=" + id + ", task=" + task + ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", createdDate=" + createdDate + "]";
+				+ ", reminderFlag=" + reminderFlag + ", fcmToken=" + fcmToken + ", createdDate=" + createdDate + "]";
 	}
+
 	
 }

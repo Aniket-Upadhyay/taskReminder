@@ -11,7 +11,9 @@ public class TaskJson {
 	private String startTime;
 	private String endTime;
 	private Integer reminderFlag;
+	private String fcmToken;
 	private String createdDate;
+	 
 	
 	public TaskJson() {
 		super();
@@ -25,6 +27,7 @@ public class TaskJson {
 		this.startTime = AppUtils.convertDateToString(taskEntity.getStartTime(), "yyyy-MM-dd HH:mm:ss");
 		this.endTime = AppUtils.convertDateToString(taskEntity.getEndTime(), "yyyy-MM-dd HH:mm:ss");;
 		this.reminderFlag = taskEntity.getReminderFlag();
+		this.fcmToken = taskEntity.getFcmToken();
 		this.createdDate = AppUtils.convertDateToString(taskEntity.getCreatedDate(), "yyyy-MM-dd");
 	}
 
@@ -63,6 +66,16 @@ public class TaskJson {
 
 	public void setReminderFlag(Integer reminderFlag) {
 		this.reminderFlag = reminderFlag;
+	}
+
+	
+	public String getFcmToken() {
+		return fcmToken;
+	}
+
+
+	public void setFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
 	}
 
 

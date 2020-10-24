@@ -17,12 +17,15 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.aniket.taskreminder.dao.TaskDao;
 import com.aniket.taskreminder.entity.TaskEntity;
@@ -31,6 +34,7 @@ import com.aniket.taskreminder.service.TaskService;
 import com.aniket.taskreminder.util.AppConstants;
 
 @RestController
+@CrossOrigin
 public class TaskController {
 	
 	@Autowired
@@ -62,5 +66,19 @@ public class TaskController {
 		}
 		return jsonObject;
 	}
+	
+	/*@PostMapping(value = "/uploadFileTasks")
+	public JSONObject uploadFileTasks(@RequestParam("file") MultipartFile file, Model model) throws Exception{
+		JSONObject jsonObject = new JSONObject();
+		TaskJson taskJsonObj = new TaskJson();
+		try {
+			
+			
+		}catch(Exception e) {
+			jsonObject.put(AppConstants.result, AppConstants.failure);
+		}
+		return jsonObject;
+	}*/
 
+	
 }
